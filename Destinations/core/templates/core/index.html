@@ -1,0 +1,44 @@
+{% extends "core/base.html" %}
+
+{% load static %}
+
+{% block title %}Home Page{% endblock title %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visited Destinations</title>
+    <link rel="stylesheet" href="{% static 'core/styles.css' %}">
+</head>
+<body>
+{% block content %}
+<div class="container">
+    <h1>Recently Shared Destinations</h1>
+    {% if destinations %}
+        {% for destination in destinations %}
+        <div class="destination">
+            <h2>{{ destination.name }}</h2>
+            <p>{{ destination.review }}</p>
+            <p>Rating: {{ destination.rating }} / 5</p>
+            <p>Shared by: {{ destination.user.name }}</p>
+        </div>
+    {% endfor %}
+    
+    {% else %}
+        <p>No destinations to display.</p>
+    {% endif %}
+
+    <hr>
+    {% if user %}
+        <p>Welcome, {{ user.name }}!</p>
+        <a href="/destinations" class="link">Manage My Destinations</a>
+        <a href="/sessions/destroy" class="link">Log Out</a>
+    {% else %}
+        <a href="/users/new" class="link">Create an Account</a> |
+        <a href="/sessions/new" class="link">Sign In</a>
+    {% endif %}
+</div>
+{% endblock content %}
+</body>
+</html>

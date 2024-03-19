@@ -1,0 +1,23 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Welcome{% endblock title %}</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'core/styles.css' %}">
+</head>
+<body>
+    <div class="banner">
+        <a href="/">Home</a>
+        {% if user %}
+            <a href="/sessions/destroy">Sign Out</a>
+        {% else %}
+            <a href="/sessions/new">Sign In</a>
+        {% endif %}
+    </div>
+
+    {% block content %}
+    {% endblock content %}
+</body>
+</html>

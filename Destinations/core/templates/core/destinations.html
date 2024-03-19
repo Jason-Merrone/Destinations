@@ -1,0 +1,42 @@
+{% extends "core/base.html" %}
+
+{% load static %}
+
+{% block title %}Home Page{% endblock title %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Destinations</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'core/styles.css' %}">
+</head>
+<body>
+{% block content %}
+<div class="container">
+    <h1>My Destinations</h1>
+    {% if destinations %}
+        <ul>
+            {% for destination in destinations %}
+            <div class="destination">
+                <h2>{{ destination.name }}</h2>
+                <p>Review: {{ destination.review }}</p>
+                <p>Rating: {{ destination.rating }}</p>
+                <p>Shared Publicly: {{ destination.share_publicly|yesno:"Yes,No" }}</p>
+                <a href="{% url 'edit_destination' destination.id %}">Edit</a> |
+                <form action="{% url 'delete_destination' destination.id %}" method="post" style="display: inline;" onsubmit="return confirm('Are you sure?');">
+                    {% csrf_token %}
+                    <input type="hidden" name="destination_id" value="{{ destination.id }}">
+                    <button type="submit">Delete</button>
+                </form>                
+            </div>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>You have not added any destinations yet.</p>
+    {% endif %}
+    <a href="/destinations/new">Add a New Destination</a> | <a href="/sessions/destroy">Log Out</a>
+</div>
+{% endblock content %}
+</body>
+</html>

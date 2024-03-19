@@ -1,0 +1,32 @@
+{% extends "core/base.html" %}
+
+{% block content %}
+<div class="container">
+    <h1>Edit Destination</h1>
+    <form method="post">
+        {% csrf_token %}
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" value="{{ destination.name }}" required><br>
+        
+        <label for="review">Review:</label>
+        <textarea id="review" name="review" required>{{ destination.review }}</textarea><br>
+        
+        <div class="form-group">
+            <label for="rating">Rating:</label>
+            <select id="rating" name="rating" required>
+                <option value="1" {% if destination.rating == 1 %}selected{% endif %}>1</option>
+                <option value="2" {% if destination.rating == 2 %}selected{% endif %}>2</option>
+                <option value="3" {% if destination.rating == 3 %}selected{% endif %}>3</option>
+                <option value="4" {% if destination.rating == 4 %}selected{% endif %}>4</option>
+                <option value="5" {% if destination.rating == 5 %}selected{% endif %}>5</option>
+            </select>
+        </div>
+        <label>
+            <input type="checkbox" name="share_publicly" {% if destination.share_publicly %}checked{% endif %}>
+            Share Publicly
+        </label><br>
+        
+        <button type="submit">Update Destination</button>
+    </form>
+</div>
+{% endblock %}
